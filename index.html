@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Ping Example</title>
+</head>
+<body>
+<h1>WebSocket Ping Example</h1>
+<div id="status">Connecting...</div>
+<script>
+    // Create a new WebSocket connection
+    const socket = new WebSocket('ws://localhost:8000/api/feedback');
+
+    // Event listener for when the connection is opened
+    socket.addEventListener('open', function (event) {
+        document.getElementById('status').innerText = 'Connected';
+        console.log('WebSocket is open now.');
+
+        // Send a "ping" message every second
+        setInterval(function() {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send('ping');
+                console.log('Ping sent');
+            }
+        }, 1000);
+    });
+
+    // Event listener for when a message is received from the server
+    socket.addEventListener('message', function (event) {
+        console.log('Message from server:', event.data);
+    });
+
+    // Event listener for when the connection is closed
+    socket.addEventListener('close', function (event) {
+        document.getElementById('status').innerText = 'Disconnected';
+        console.log('WebSocket is closed now.');
+    });
+
+    // Event listener for when an error occurs
+    socket.addEventListener('error', function (event) {
+        document.getElementById('status').innerText = 'Error';
+        console.error('WebSocket error observed:', event);
+    });
+</script>
+</body>
+</html>

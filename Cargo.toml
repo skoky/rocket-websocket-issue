@@ -1,0 +1,11 @@
+[package]
+name = "rocket-websocket-issue"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.5", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+ws = { package = "rocket_ws", version = "0.1" }
+tokio-stream = "0.1"
+tokio = "1.37.0"
